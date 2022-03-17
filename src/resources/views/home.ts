@@ -40,29 +40,13 @@ export class Home {
         const currentFrame: FrameCardCustomElement = this.frameCards[rc.indexOfFrame];
 
         // Compute double previous frame
-        const triplePreviousFrameScore = rc.indexOfFrame > 2 ? this.frameCards[+rc.indexOfFrame - 3].score : 0;
-        if (rc.indexOfFrame > 1) {
-            const add1 = this.frameCards[+rc.indexOfFrame - 1].roll1;
-            const add2 = this.frameCards[+rc.indexOfFrame - 1].isStrike ? currentFrame.roll1 : this.frameCards[+rc.indexOfFrame - 1].roll2;
-            this.frameCards[rc.indexOfFrame - 2].computeScore(triplePreviousFrameScore, add1, add2);
-        }
+        if (rc.indexOfFrame > 1) this.updateFrame(this.frameCards[rc.indexOfFrame - 2]);
 
         // Compute previous frame
-        const doublePreviousFrameScore = rc.indexOfFrame > 1 ? this.frameCards[+rc.indexOfFrame - 2].score : 0;
-        if (rc.indexOfFrame > 0) {
-            const add1 = currentFrame.roll1;
-            const add2 = this.frameCards[+rc.indexOfFrame - 1].isStrike && !currentFrame.isLastFrame ? this.frameCards[+rc.indexOfFrame + 1].roll1 : currentFrame.roll2;
-            this.frameCards[rc.indexOfFrame - 1].computeScore(doublePreviousFrameScore, add1, add2);
-        }
-
+        if (rc.indexOfFrame > 0) this.updateFrame(this.frameCards[rc.indexOfFrame - 1]);
+        
         // Compute current frame
-        const previousFrameScore = rc.indexOfFrame > 0 ? this.frameCards[+rc.indexOfFrame - 1].score : 0;
-        const nextFrameRoll1 = currentFrame.isLastFrame ? 0 : this.frameCards[+rc.indexOfFrame + 1].roll1;
-        const nextFrameRoll2 = currentFrame.isLastFrame ? 0
-            : this.frameCards[+rc.indexOfFrame + 1].isStrike && !this.frameCards[+rc.indexOfFrame + 1].isLastFrame
-                ? this.frameCards[+rc.indexOfFrame + 2].roll1
-                : this.frameCards[+rc.indexOfFrame + 1].roll1;
-        currentFrame.computeScore(previousFrameScore, nextFrameRoll1, nextFrameRoll2);
+        this.updateFrame(currentFrame);
 
         // Update subsequent frames if scores exist
         if (!currentFrame.isLastFrame && this.frameCards[+rc.indexOfFrame + 1]?.score) {
@@ -78,8 +62,22 @@ export class Home {
     }
 
     // private helpers
-    private getRollAdd(numberOfRoll: number) {
+    private updateFrame(frame: FrameCardCustomElement) {
+        const previousFrameScore = frame.index > 0 ? this.frameCards[+frame.index - 1].score : 0;
 
-
+        let add1 = 0;
+        let add2 = 0;
+        if(!frame.isLastFrame) {
+            const nextFrame = this.frameCards[+frame.index + 1];
+            add1 = nextFrame.roll1;
+            if(nextFrame.isStrike && !nextFrame.isLastFrame) {
+                const nextNextFrame = this.frameCards[+frame.index + 2];
+                add2 = nextNextFrame.roll1;
+            }
+            else {
+                add2 = nextFrame.roll2;
+            }
+        }
+        frame.computeScore(previousFrameScore, add1, add2);
     }
 }

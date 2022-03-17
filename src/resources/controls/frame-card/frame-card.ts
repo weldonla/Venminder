@@ -11,8 +11,8 @@ export class FrameCardCustomElement {
     private eventAggregator: EventAggregator;
 
     // bindables
-    @bindable private index: number;
-    @bindable private title: string;
+    @bindable public index: number;
+    @bindable private name: string;
     @bindable public isLastFrame: boolean;
 
     // observables
@@ -50,7 +50,7 @@ export class FrameCardCustomElement {
     }
 
     // public helpers
-    computeScore(previousFrameScore: number, nextFrameRoll1: number, nextFrameRoll2: number) {
+    public computeScore(previousFrameScore: number, nextFrameRoll1: number, nextFrameRoll2: number) {
         this.score = +previousFrameScore;
         if (this.isSpare) this.score += +nextFrameRoll1;
         if (this.isStrike) this.score += +nextFrameRoll2;
@@ -69,15 +69,17 @@ export class FrameCardCustomElement {
     }
 
     private validate() {
-        this.emitValidationClear();
         if(this.roll1 > 10 || this.roll2 > 10 || this.roll3 > 10) {
-            this.emitValidationError(`Please correct your score for ${this.title}. No individual roll can be more than 10.`)
+            this.emitValidationError(`Please correct your score for ${this.name}. No individual roll can be more than 10.`)
         }
         else if(!this.isLastFrame && +this.roll1 + +this.roll2 > 10) {
-            this.emitValidationError(`Please correct your score for ${this.title}. You're rolls can't add to more than 10.`);
+            this.emitValidationError(`Please correct your score for ${this.name}. You're rolls can't add to more than 10.`);
         }
         else if(this.isLastFrame && this.roll3 > 0 && +this.roll1 + +this.roll2 < 10) {
-            this.emitValidationError(`Please correct your score for ${this.title}. You can't bowl a third roll unless you got a strike or a spare on this frame.`);
+            this.emitValidationError(`Please correct your score for ${this.name}. You can't bowl a third roll unless you got a strike or a spare on this frame.`);
+        }
+        else {
+            this.emitValidationClear();
         }
     }
 
