@@ -1,0 +1,24 @@
+<template>
+  <div class="container-fluid navbar-spacer">
+    <div class="row">
+      <div class="col">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+          <a class="navbar-brand" href="#">VMBS</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-lg-5 mr-auto">
+              <li class="nav-item ${router.currentInstruction.config.name == 'home' ? 'active' : ''}">
+                <a class="nav-link" route-href="route: home" href="#">Home</a>
+              </li>
+              <li class="nav-item ${router.currentInstruction.config.name == 'about' ? 'active' : ''}">
+                <a class="nav-link" route-href="route: about" href="#">About</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</template>

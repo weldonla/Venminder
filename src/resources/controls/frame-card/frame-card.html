@@ -1,0 +1,27 @@
+<template>
+    <div class="card text-white bg-secondary mb-3" style="min-height: 154px;">
+        <div class="card-header">${title}</div>
+        <div class="card-body">
+            <div class="containter">
+                <div class="row">
+                    <div class="col p-0">
+                        <input class="form-control form-control-sm" type="text" value.bind="roll1">
+                    </div>
+                    <div class="col p-0">
+                        <input class="form-control form-control-sm" type="text" value.bind="roll2">
+                    </div>
+                    <div class="col p-0" if.bind="isLastFrame">
+                        <input class="form-control form-control-sm" type="text" value.bind="roll3">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="mt-2 text-center">
+                            ${score}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

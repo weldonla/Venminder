@@ -1,0 +1,35 @@
+// Google font imports https://fonts.google.com/
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cabin&family=Permanent+Marker&display=swap");
+
+// Bootstrap imports and overrides
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/mixins";
+@import "../../../node_modules/bootstrap/scss/utilities";
+
+$grid-breakpoints: (
+    xxs: 0,
+    xs: 375px,
+    sm: 544px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1400px,
+);
+
+$container-max-widths: (
+    xxs: 374px,
+    xs: 375px,
+    sm: 544px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1400px,
+);
+
+@import "../../../node_modules/bootstrap";
+
+// Scss file imports
+@import "base.scss";

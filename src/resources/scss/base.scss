@@ -1,0 +1,70 @@
+// Global Variables
+// Colors
+$green-light: #b1de00;
+$green-dark: #468902;
+$blue-light: #628290;
+$blue-dark: #133954;
+$dark-dark: #000000;
+$dark-almost: #1b1c1c;
+
+// Dimensions
+
+$fixed-navbar-height: 56px;
+$fixed-footer-height: 107px;
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background-color: $dark-almost;
+    color: lightgrey;
+    font-family: "Cabin", sans-serif;
+}
+
+// Text
+.playfair-display {
+    font-family: "Playfair Display", Sans-serif;
+    line-height: $line-height-lg;
+}
+
+.permanent-marker {
+    font-family: "Permanent Marker", cursive;
+}
+
+.quote-background {
+    background-color: #333333bd;
+}
+
+a {
+    color: $green-dark;
+
+    &:hover {
+        color: $green-light;
+    }
+}
+
+code {
+    color: $blue-light;
+}
+
+// Navbar
+.navbar-spacer {
+    height: $fixed-navbar-height;
+}
+
+.main-content-height {
+    height: calc(100vh - $fixed-navbar-height);
+}
+
+.footer-height {
+    height: $fixed-footer-height;
+}
+
+// Simplebar
+.simplebar-scrollbar::before {
+    background-color: $green-light;
+}
