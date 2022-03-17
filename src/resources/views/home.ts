@@ -63,10 +63,10 @@ export class Home {
 
         let add1 = 0;
         let add2 = 0;
-        if(!frame.isLastFrame) {
+        if (!frame.isLastFrame) {
             const nextFrame = this.frameCards[+frame.index + 1];
             add1 = nextFrame.roll1;
-            if(nextFrame.isStrike && !nextFrame.isLastFrame) {
+            if (nextFrame.isStrike && !nextFrame.isLastFrame) {
                 const nextNextFrame = this.frameCards[+frame.index + 2];
                 add2 = nextNextFrame.roll1;
             }

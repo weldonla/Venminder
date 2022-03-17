@@ -30,6 +30,7 @@ export class FrameCardCustomElement {
     }
     @computedFrom("roll1", "roll2")
     public get isSpare(): boolean {
+        // A strike is also a spare intentionally, so the computeScore function is cleaner
         return (+this.roll1 + +this.roll2 === 10) ? true : false;
     }
 
@@ -40,7 +41,7 @@ export class FrameCardCustomElement {
 
     // ui events
     private roll1Changed() {
-        if(+this.roll1 === 10 && !this.isLastFrame) this.roll2 = 0;
+        if (+this.roll1 === 10 && !this.isLastFrame) this.roll2 = 0;
         this.emitRollChangedEvent();
     }
     private roll2Changed() {
