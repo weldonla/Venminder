@@ -36,23 +36,37 @@ export class Home {
     }
 
     // listeners
-    private rollChangeEventListener(rollChange: RollChangeEventData) {
-        const currentFrame: FrameCardCustomElement = this.frameCards[rollChange.indexOfFrame];
+    private rollChangeEventListener(rc: RollChangeEventData) {
+        const currentFrame: FrameCardCustomElement = this.frameCards[rc.indexOfFrame];
+
+        // Compute double previous frame
+        const triplePreviousFrameScore = rc.indexOfFrame > 2 ? this.frameCards[+rc.indexOfFrame - 3].score : 0;
+        if (rc.indexOfFrame > 1) {
+            const add1 = this.frameCards[+rc.indexOfFrame - 1].roll1;
+            const add2 = this.frameCards[+rc.indexOfFrame - 1].isStrike ? currentFrame.roll1 : this.frameCards[+rc.indexOfFrame - 1].roll2;
+            this.frameCards[rc.indexOfFrame - 2].computeScore(triplePreviousFrameScore, add1, add2);
+        }
 
         // Compute previous frame
-        const doublePreviousFrameScore = rollChange.indexOfFrame > 1 ? this.frameCards[+rollChange.indexOfFrame - 2].score : 0;
-        if (rollChange.indexOfFrame > 0)
-            this.frameCards[rollChange.indexOfFrame - 1].computeScore(doublePreviousFrameScore, currentFrame.roll1, currentFrame.roll2);
+        const doublePreviousFrameScore = rc.indexOfFrame > 1 ? this.frameCards[+rc.indexOfFrame - 2].score : 0;
+        if (rc.indexOfFrame > 0) {
+            const add1 = currentFrame.roll1;
+            const add2 = this.frameCards[+rc.indexOfFrame - 1].isStrike && !currentFrame.isLastFrame ? this.frameCards[+rc.indexOfFrame + 1].roll1 : currentFrame.roll2;
+            this.frameCards[rc.indexOfFrame - 1].computeScore(doublePreviousFrameScore, add1, add2);
+        }
 
         // Compute current frame
-        const previousFrameScore = rollChange.indexOfFrame > 0 ? this.frameCards[+rollChange.indexOfFrame - 1].score : 0;
-        const nextFrameRoll1 = currentFrame.isLastFrame ? 0 : this.frameCards[+rollChange.indexOfFrame + 1].roll1;
-        const nextFrameRoll2 = currentFrame.isLastFrame ? 0 : this.frameCards[+rollChange.indexOfFrame + 1].roll2;
+        const previousFrameScore = rc.indexOfFrame > 0 ? this.frameCards[+rc.indexOfFrame - 1].score : 0;
+        const nextFrameRoll1 = currentFrame.isLastFrame ? 0 : this.frameCards[+rc.indexOfFrame + 1].roll1;
+        const nextFrameRoll2 = currentFrame.isLastFrame ? 0
+            : this.frameCards[+rc.indexOfFrame + 1].isStrike && !this.frameCards[+rc.indexOfFrame + 1].isLastFrame
+                ? this.frameCards[+rc.indexOfFrame + 2].roll1
+                : this.frameCards[+rc.indexOfFrame + 1].roll1;
         currentFrame.computeScore(previousFrameScore, nextFrameRoll1, nextFrameRoll2);
 
         // Update subsequent frames if scores exist
-        if (!currentFrame.isLastFrame && this.frameCards[+rollChange.indexOfFrame + 1]?.score) {
-            this.rollChangeEventListener(new RollChangeEventData({ indexOfFrame: +rollChange.indexOfFrame + 1 }));
+        if (!currentFrame.isLastFrame && this.frameCards[+rc.indexOfFrame + 1]?.score) {
+            this.rollChangeEventListener(new RollChangeEventData({ indexOfFrame: +rc.indexOfFrame + 1 }));
         }
 
         // Update total
@@ -61,5 +75,11 @@ export class Home {
 
     private validationMessageListener(rollValidationError: RollValidationErrorEventData) {
         this.validationMessage = rollValidationError.validationMessage;
+    }
+
+    // private helpers
+    private getRollAdd(numberOfRoll: number) {
+
+
     }
 }

@@ -25,13 +25,11 @@ export class FrameCardCustomElement {
 
     // computed props
     @computedFrom("roll1", "roll2")
-    private get isStrike(): boolean {
-        if (!this.roll1 || !this.roll2) return false;
+    public get isStrike(): boolean {
         return +this.roll1 === 10 ? true : false;
     }
     @computedFrom("roll1", "roll2")
-    private get isSpare(): boolean {
-        if (!this.roll1 || !this.roll2) return false;
+    public get isSpare(): boolean {
         return (+this.roll1 + +this.roll2 === 10) ? true : false;
     }
 
@@ -78,7 +76,7 @@ export class FrameCardCustomElement {
         else if(!this.isLastFrame && +this.roll1 + +this.roll2 > 10) {
             this.emitValidationError(`Please correct your score for ${this.title}. You're rolls can't add to more than 10.`);
         }
-        else if(this.isLastFrame && this.roll3 && +this.roll1 + +this.roll2 !== 10) {
+        else if(this.isLastFrame && this.roll3 > 0 && +this.roll1 + +this.roll2 < 10) {
             this.emitValidationError(`Please correct your score for ${this.title}. You can't bowl a third roll unless you got a strike or a spare on this frame.`);
         }
     }
