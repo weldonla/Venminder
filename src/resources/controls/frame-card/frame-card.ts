@@ -3,6 +3,7 @@ import { bindable, observable, computedFrom } from "aurelia-framework";
 import { EventAggregator } from "aurelia-event-aggregator";
 import { EventEnum } from "resources/enums/event-enum";
 import { RollChangeEventData } from "resources/entities/roll-change-event-data";
+import { RollValidationErrorEventData } from "resources/entities/roll-validation-error-event-data";
 
 @autoinject
 export class FrameCardCustomElement {
@@ -41,13 +42,13 @@ export class FrameCardCustomElement {
 
     // ui events
     private roll1Changed() {
-        this.eventAggregator.publish(EventEnum.ROLL_CHANGED, new RollChangeEventData({ indexOfFrame: this.index }));
+        this.emitRollChangedEvent();
     }
     private roll2Changed() {
-        this.eventAggregator.publish(EventEnum.ROLL_CHANGED, new RollChangeEventData({ indexOfFrame: this.index }));
+        this.emitRollChangedEvent();
     }
     private roll3Changed() {
-        this.eventAggregator.publish(EventEnum.ROLL_CHANGED, new RollChangeEventData({ indexOfFrame: this.index }));
+        this.emitRollChangedEvent();
     }
 
     // public helpers
@@ -62,5 +63,31 @@ export class FrameCardCustomElement {
     private getCombinedFrameRolls() {
         if (this.isLastFrame) return +this.roll1 + +this.roll2 + +this.roll3;
         return +this.roll1 + +this.roll2;
+    }
+
+    private emitRollChangedEvent() {
+        this.validate();
+        this.eventAggregator.publish(EventEnum.ROLL_CHANGED, new RollChangeEventData({ indexOfFrame: this.index }));
+    }
+
+    private validate() {
+        this.emitValidationClear();
+        if(this.roll1 > 10 || this.roll2 > 10 || this.roll3 > 10) {
+            this.emitValidationError(`Please correct your score for ${this.title}. No individual roll can be more than 10.`)
+        }
+        else if(!this.isLastFrame && +this.roll1 + +this.roll2 > 10) {
+            this.emitValidationError(`Please correct your score for ${this.title}. You're rolls can't add to more than 10.`);
+        }
+        else if(this.isLastFrame && this.roll3 && +this.roll1 + +this.roll2 !== 10) {
+            this.emitValidationError(`Please correct your score for ${this.title}. You can't bowl a third roll unless you got a strike or a spare on this frame.`);
+        }
+    }
+
+    private emitValidationError(errorMessage: string) {
+        this.eventAggregator.publish(EventEnum.ROLL_VALIDATION_ERROR, new RollValidationErrorEventData({ validationMessage: errorMessage }));
+    }
+
+    private emitValidationClear() {
+        this.eventAggregator.publish(EventEnum.ROLL_VALIDATION_ERROR, new RollValidationErrorEventData({ validationMessage: null }));
     }
 }
