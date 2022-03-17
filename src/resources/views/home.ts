@@ -40,8 +40,8 @@ export class Home {
         const currentFrame: FrameCardCustomElement = this.frameCards[rc.indexOfFrame];
 
         // Compute/update two previous frames if they exist and current frame
-        if (rc.indexOfFrame > 1) this.updateFrame(this.frameCards[rc.indexOfFrame - 2]);
-        if (rc.indexOfFrame > 0) this.updateFrame(this.frameCards[rc.indexOfFrame - 1]);
+        if (rc.indexOfFrame >= 2) this.updateFrame(this.frameCards[rc.indexOfFrame - 2]);
+        if (rc.indexOfFrame >= 1) this.updateFrame(this.frameCards[rc.indexOfFrame - 1]);
         this.updateFrame(currentFrame);
 
         // Update subsequent frames if scores exist

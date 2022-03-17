@@ -40,6 +40,7 @@ export class FrameCardCustomElement {
 
     // ui events
     private roll1Changed() {
+        if(+this.roll1 === 10 && !this.isLastFrame) this.roll2 = 0;
         this.emitRollChangedEvent();
     }
     private roll2Changed() {
@@ -50,10 +51,10 @@ export class FrameCardCustomElement {
     }
 
     // public helpers
-    public computeScore(previousFrameScore: number, nextFrameRoll1: number, nextFrameRoll2: number) {
+    public computeScore(previousFrameScore: number, add1: number, add2: number) {
         this.score = +previousFrameScore;
-        if (this.isSpare) this.score += +nextFrameRoll1;
-        if (this.isStrike) this.score += +nextFrameRoll2;
+        if (this.isSpare) this.score += +add1;
+        if (this.isStrike) this.score += +add2;
         this.score += this.getCombinedFrameRolls();
     }
 
@@ -69,13 +70,21 @@ export class FrameCardCustomElement {
     }
 
     private validate() {
-        if(this.roll1 > 10 || this.roll2 > 10 || this.roll3 > 10) {
+        const regex: RegExp = new RegExp('^[0-9]+$');
+
+        if ((this.roll1 && !regex.test(this.roll1?.toString()))
+            || (this.roll2 && !regex.test(this.roll2?.toString()))
+            || (this.roll3 && !regex.test(this.roll3?.toString()))
+        ) {
+            this.emitValidationError(`Please correct your rolls for ${this.name}. Please only input numbers.`)
+        }
+        else if (this.roll1 > 10 || this.roll2 > 10 || this.roll3 > 10) {
             this.emitValidationError(`Please correct your score for ${this.name}. No individual roll can be more than 10.`)
         }
-        else if(!this.isLastFrame && +this.roll1 + +this.roll2 > 10) {
+        else if (!this.isLastFrame && +this.roll1 + +this.roll2 > 10) {
             this.emitValidationError(`Please correct your score for ${this.name}. You're rolls can't add to more than 10.`);
         }
-        else if(this.isLastFrame && this.roll3 > 0 && +this.roll1 + +this.roll2 < 10) {
+        else if (this.isLastFrame && this.roll3 > 0 && +this.roll1 + +this.roll2 < 10) {
             this.emitValidationError(`Please correct your score for ${this.name}. You can't bowl a third roll unless you got a strike or a spare on this frame.`);
         }
         else {
