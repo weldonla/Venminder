@@ -39,13 +39,9 @@ export class Home {
     private rollChangeEventListener(rc: RollChangeEventData) {
         const currentFrame: FrameCardCustomElement = this.frameCards[rc.indexOfFrame];
 
-        // Compute double previous frame
+        // Compute/update two previous frames if they exist and current frame
         if (rc.indexOfFrame > 1) this.updateFrame(this.frameCards[rc.indexOfFrame - 2]);
-
-        // Compute previous frame
         if (rc.indexOfFrame > 0) this.updateFrame(this.frameCards[rc.indexOfFrame - 1]);
-        
-        // Compute current frame
         this.updateFrame(currentFrame);
 
         // Update subsequent frames if scores exist
