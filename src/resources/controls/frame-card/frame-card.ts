@@ -35,7 +35,7 @@ export class FrameCardCustomElement {
     }
 
     // lifecycle
-    private constructor(eventAggregator: EventAggregator) {
+    public constructor(eventAggregator: EventAggregator) {
         this.eventAggregator = eventAggregator;
     }
 

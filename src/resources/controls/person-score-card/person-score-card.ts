@@ -11,11 +11,11 @@ export class PersonScoreCard {
     private eventAggregator: EventAggregator;
 
     // ui elements
-    private frameCards: Array<FrameCardCustomElement> = new Array<FrameCardCustomElement>();
+    public frameCards: Array<FrameCardCustomElement> = new Array<FrameCardCustomElement>();
 
     // data
     private name: string;
-    private scoreTotal: number;
+    public scoreTotal: number;
     private subscriptions: Array<Subscription>;
     private validationMessage: string;
 
