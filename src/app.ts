@@ -12,7 +12,7 @@ export class App {
 
   configureRouter(config, router) {
     config.map([
-      { route: ['', '/home'], name: 'home', moduleId: PLATFORM.moduleName('resources/views/home'), nav: true, title: "TechStuff AndSuch" },
+      { route: ['', '/scorer'], name: 'scorer', moduleId: PLATFORM.moduleName('resources/views/scorer'), nav: true, title: "Venminder Bowling Scorer" },
       { route: '/about', name: 'about', moduleId: PLATFORM.moduleName('resources/views/about'), nav: true, title: 'About' }
     ]);
 
