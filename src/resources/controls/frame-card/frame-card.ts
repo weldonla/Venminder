@@ -80,13 +80,16 @@ export class FrameCardCustomElement {
             this.emitValidationError(`Please correct your rolls for ${this.name}. Please only input numbers.`)
         }
         else if (this.roll1 > 10 || this.roll2 > 10 || this.roll3 > 10) {
-            this.emitValidationError(`Please correct your score for ${this.name}. No individual roll can be more than 10.`)
+            this.emitValidationError(`Please correct your rolls for ${this.name}. No individual roll can be more than 10.`)
         }
         else if (!this.isLastFrame && +this.roll1 + +this.roll2 > 10) {
-            this.emitValidationError(`Please correct your score for ${this.name}. You're rolls can't add to more than 10.`);
+            this.emitValidationError(`Please correct your rolls for ${this.name}. Your rolls can't add to more than 10.`);
+        }
+        else if (this.isLastFrame && +this.roll1 !== 10 && +this.roll1 + +this.roll2 > 10) {
+            this.emitValidationError(`Please correct your rolls for ${this.name}. Your first two rolls can't add to more than 10, unless roll 1 was a strike.`);
         }
         else if (this.isLastFrame && this.roll3 > 0 && +this.roll1 + +this.roll2 < 10) {
-            this.emitValidationError(`Please correct your score for ${this.name}. You can't bowl a third roll unless you got a strike or a spare on this frame.`);
+            this.emitValidationError(`Please correct your rolls for ${this.name}. You can't bowl a third roll unless you got a strike or a spare on this frame.`);
         }
         else {
             this.emitValidationClear();

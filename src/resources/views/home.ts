@@ -39,18 +39,24 @@ export class Home {
     private rollChangeEventListener(rc: RollChangeEventData) {
         const currentFrame: FrameCardCustomElement = this.frameCards[rc.indexOfFrame];
 
-        // Compute/update two previous frames if they exist and current frame
-        if (rc.indexOfFrame >= 2) this.updateFrame(this.frameCards[rc.indexOfFrame - 2]);
-        if (rc.indexOfFrame >= 1) this.updateFrame(this.frameCards[rc.indexOfFrame - 1]);
-        this.updateFrame(currentFrame);
+        // Set index offset for updating previous 2 frames in case of spare or strikes
+        // @todo you can potentially add additional if conditions to only set index offset if a spare or strike happened
+        let indexOffset = 0;
+        if (rc.indexOfFrame >= 1) indexOffset = 1;
+        if (rc.indexOfFrame >= 2) indexOffset = 2;
 
-        // Update subsequent frames if scores exist
-        if (!currentFrame.isLastFrame && this.frameCards[+rc.indexOfFrame + 1]?.score) {
-            this.rollChangeEventListener(new RollChangeEventData({ indexOfFrame: +rc.indexOfFrame + 1 }));
+        // Update current frame and update subsequent frames if scores exist
+        // @todo potentially implement break to only update scores if a score has been calculated before for that frame
+        for (let i = +rc.indexOfFrame - indexOffset; i < this.frameCards.length; i++) {
+            const frame = this.frameCards[i];
+
+            // if (!frame.roll1 || !frame.roll2) break;
+
+            this.updateFrame(frame);
+
+            // Update total
+            if (frame.isLastFrame) this.scoreTotal = frame.score;
         }
-
-        // Update total
-        if (currentFrame.isLastFrame && currentFrame.score) this.scoreTotal = currentFrame.score;
     }
 
     private validationMessageListener(rollValidationError: RollValidationErrorEventData) {
@@ -74,6 +80,7 @@ export class Home {
                 add2 = nextFrame.roll2;
             }
         }
+
         frame.computeScore(previousFrameScore, add1, add2);
     }
 }
