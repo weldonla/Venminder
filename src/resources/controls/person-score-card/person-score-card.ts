@@ -41,17 +41,15 @@ export class PersonScoreCard {
         const currentFrame: FrameCardCustomElement = this.frameCards[rc.indexOfFrame];
 
         // Set index offset for updating previous 2 frames in case of spare or strikes
-        // @todo you can potentially add additional if conditions to only set index offset if a spare or strike happened
+        // @todo potentially add additional if conditions to only set index offset if a spare or strike actually happened
         let indexOffset = 0;
         if (rc.indexOfFrame >= 1) indexOffset = 1;
         if (rc.indexOfFrame >= 2) indexOffset = 2;
 
-        // Update current frame and update subsequent frames if scores exist
+        // Update all potentially relevant frames
         // @todo potentially implement break to only update scores if a score has been calculated before for that frame
         for (let i = +rc.indexOfFrame - indexOffset; i < this.frameCards.length; i++) {
             const frame = this.frameCards[i];
-
-            // if (!frame.roll1 || !frame.roll2) break;
 
             this.updateFrame(frame);
 
@@ -68,20 +66,20 @@ export class PersonScoreCard {
     private updateFrame(frame: FrameCardCustomElement) {
         const previousFrameScore = frame.index > 0 ? this.frameCards[+frame.index - 1].score : 0;
 
-        let add1 = 0;
-        let add2 = 0;
+        let sparePoints = 0;
+        let strikePoints = 0;
         if (!frame.isLastFrame) {
             const nextFrame = this.frameCards[+frame.index + 1];
-            add1 = nextFrame.roll1;
+            sparePoints = nextFrame.roll1;
             if (nextFrame.isStrike && !nextFrame.isLastFrame) {
                 const nextNextFrame = this.frameCards[+frame.index + 2];
-                add2 = nextNextFrame.roll1;
+                strikePoints = nextNextFrame.roll1;
             }
             else {
-                add2 = nextFrame.roll2;
+                strikePoints = nextFrame.roll2;
             }
         }
 
-        frame.computeScore(previousFrameScore, add1, add2);
+        frame.computeScore(previousFrameScore, sparePoints, strikePoints);
     }
 }

@@ -52,10 +52,10 @@ export class FrameCardCustomElement {
     }
 
     // public helpers
-    public computeScore(previousFrameScore: number, add1: number, add2: number) {
+    public computeScore(previousFrameScore: number, sparePoints: number, strikePoints: number) {
         this.score = +previousFrameScore;
-        if (this.isSpare) this.score += +add1;
-        if (this.isStrike) this.score += +add2;
+        if (this.isSpare) this.score += +sparePoints;
+        if (this.isStrike) this.score += +strikePoints;
         this.score += this.getCombinedFrameRolls();
     }
 
@@ -63,11 +63,6 @@ export class FrameCardCustomElement {
     private getCombinedFrameRolls() {
         if (this.isLastFrame) return +this.roll1 + +this.roll2 + +this.roll3;
         return +this.roll1 + +this.roll2;
-    }
-
-    private emitRollChangedEvent() {
-        this.validate();
-        this.eventAggregator.publish(EventEnum.ROLL_CHANGED, new RollChangeEventData({ indexOfFrame: this.index }));
     }
 
     private validate() {
@@ -94,6 +89,12 @@ export class FrameCardCustomElement {
         else {
             this.emitValidationClear();
         }
+    }
+
+    // emitter functions
+    private emitRollChangedEvent() {
+        this.validate();
+        this.eventAggregator.publish(EventEnum.ROLL_CHANGED, new RollChangeEventData({ indexOfFrame: this.index }));
     }
 
     private emitValidationError(errorMessage: string) {
