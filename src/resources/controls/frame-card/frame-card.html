@@ -1,5 +1,5 @@
 <template>
-    <div class="card text-white bg-secondary mb-3" style="min-height: 154px;">
+    <div class="card text-white bg-secondary mb-3" style="min-height: 161px;">
         <div class="card-header">${name}</div>
         <div class="card-body">
             <div class="containter">
@@ -16,7 +16,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div class="mt-2 text-center" show.bind="score">
+                        <div class="mt-2 text-center" show.bind="score >= 0">
                             ${score}
                         </div>
                     </div>

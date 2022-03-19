@@ -14,6 +14,7 @@ export class FrameCardCustomElement {
     @bindable public index: number;
     @bindable private name: string;
     @bindable public isLastFrame: boolean;
+    @bindable private scoreCardId: number;
 
     // observables
     @observable public roll1: number;
@@ -40,19 +41,24 @@ export class FrameCardCustomElement {
     }
 
     // ui events
-    private roll1Changed() {
+    private roll1Changed(newValue) {
         if (+this.roll1 === 10 && !this.isLastFrame) this.roll2 = 0;
         this.emitRollChangedEvent();
     }
-    private roll2Changed() {
+    private roll2Changed(newValue) {
         this.emitRollChangedEvent();
     }
-    private roll3Changed() {
+    private roll3Changed(newValue) {
         this.emitRollChangedEvent();
     }
 
     // public helpers
     public computeScore(previousFrameScore: number, sparePoints: number, strikePoints: number) {
+        // console.log("Compute score for: " + this.index);
+        // console.log("previousFrameScore: " + previousFrameScore);
+        // console.log("sparePoints: " + +sparePoints);
+        // console.log("strikePoints: " + +strikePoints);
+        // console.log(this.score);
         this.score = +previousFrameScore;
         if (this.isSpare) this.score += +sparePoints;
         if (this.isStrike) this.score += +strikePoints;
@@ -94,14 +100,14 @@ export class FrameCardCustomElement {
     // emitter functions
     private emitRollChangedEvent() {
         this.validate();
-        this.eventAggregator.publish(EventEnum.ROLL_CHANGED, new RollChangeEventData({ indexOfFrame: this.index }));
+        this.eventAggregator.publish(`${EventEnum.ROLL_CHANGED}_${this.scoreCardId}`, new RollChangeEventData({ indexOfFrame: this.index }));
     }
 
     private emitValidationError(errorMessage: string) {
-        this.eventAggregator.publish(EventEnum.ROLL_VALIDATION_ERROR, new RollValidationErrorEventData({ validationMessage: errorMessage }));
+        this.eventAggregator.publish(`${EventEnum.ROLL_VALIDATION_ERROR}_${this.scoreCardId}`, new RollValidationErrorEventData({ validationMessage: errorMessage }));
     }
 
     private emitValidationClear() {
-        this.eventAggregator.publish(EventEnum.ROLL_VALIDATION_ERROR, new RollValidationErrorEventData({ validationMessage: null }));
+        this.eventAggregator.publish(`${EventEnum.ROLL_VALIDATION_ERROR}_${this.scoreCardId}`, new RollValidationErrorEventData({ validationMessage: null }));
     }
 }

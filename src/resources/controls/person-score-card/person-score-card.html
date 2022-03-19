@@ -1,6 +1,6 @@
 <template>
     <require from="resources/controls/frame-card/frame-card"></require>
-    
+
     <div class="container mt-5">
         <div class="row">
             <div class="col p-0">
@@ -9,27 +9,36 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row border-bottom">
             <div class="col-auto p-0 mt-2 d-flex">
-                <div class="card text-white bg-secondary mb-3" style="min-height: 154px;">
+                <div class="card text-white bg-secondary mb-3" style="min-height: 161px;">
                     <div class="card-header">Name</div>
                     <div class="card-body">
                         <input class="form-control form-control-sm" type="text" value.bind="person">
-                        <!-- @todo add functionality for random rolls -->
+                        <div class="container-fluid">
+                            <div class="row mt-2">
+                                <div class="col p-0 text-right">
+                                    <!-- @todo add functionality to disable roll button disabled.bind="scoreTotal" -->
+                                    <button type="button" class="btn btn-light btn-sm d-inline-block" click.delegate="rollRandom()">Roll</button>
+                                    <button type="button" class="btn btn-warning btn-sm d-inline-block" click.delegate="clearScoreCard()">Clear</button>
+                                    <button type="button" class="btn btn-danger btn-sm d-inline-block" click.delegate="deletePersonFunction(id)">Delete</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <template repeat.for="i of 10">
                 <div class="col p-0 mt-2 d-flex">
-                    <frame-card name="Frame&nbsp;${i + 1}" index="${$index}" view-model.ref="frameCards[$index]" is-last-frame.bind="$index == 9 ? true : false">
-                    </frame-card>
+                    <frame-card name="Frame&nbsp;${i + 1}" index="${$index}" view-model.ref="frameCards[$index]" is-last-frame.bind="$index == 9 ? true : false"
+                        score-card-id.bind="id"></frame-card>
                 </div>
             </template>
             <div class="col-auto p-0 mt-2 d-flex">
-                <div class="card text-white bg-secondary mb-3" style="min-height: 154px;">
+                <div class="card text-white bg-secondary mb-3" style="min-height: 161px;">
                     <div class="card-header">Total</div>
                     <div class="card-body">
-                        <div class="mt-2 text-center" show.bind="scoreTotal">${scoreTotal}</div>
+                        <div id="scoreTotal" class="mt-2 text-center" if.bind="scoreTotal >= 0">${scoreTotal}</div>
                     </div>
                 </div>
             </div>
