@@ -2,9 +2,6 @@ export class Scorer {
     // data
     personScoreCards: Array<number>
 
-    // ui
-    personScoreCardsHolder: HTMLElement;
-
     private attached() {
         this.personScoreCards = new Array<number>();
         this.addNewPersonScoreCard();

@@ -2,12 +2,10 @@
     <require from="resources/controls/person-score-card/person-score-card"></require>
 
     <div class="main-content-height" data-simplebar data-simplebar-auto-hide="false">
-        <div ref="personScoreCardsHolder">
-            <!-- @todo consider mobile functionality like display multiple people as tabs or buttons to show the person selected -->
-            <template repeat.for="id of personScoreCards">
-                <person-score-card id.bind="id" delete-person-function.call="deletePersonScoreCardById(id)"></person-score-card>
-            </template>
-        </div>
+        <!-- @todo consider mobile functionality like display multiple people as tabs or buttons to show the person selected -->
+        <template repeat.for="id of personScoreCards">
+            <person-score-card id.bind="id" delete-person-function.call="deletePersonScoreCardById(id)"></person-score-card>
+        </template>
         <div class="container mt-2">
             <div class="row">
                 <div class="col p-0">
