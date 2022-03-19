@@ -6,7 +6,7 @@ import { RollChangeEventData } from "resources/entities/roll-change-event-data";
 import { RollValidationErrorEventData } from "resources/entities/roll-validation-error-event-data";
 
 @autoinject
-export class PersonScoreCard {
+export class PersonScoreCardCustomElement {
     // injected
     private eventAggregator: EventAggregator;
 
@@ -30,7 +30,7 @@ export class PersonScoreCard {
     }
 
     private attached() {
-        // @todo consider replacing subscriptions with bindable function like the deletePersonFunction
+        // @todo consider replacing subscriptions with bindable functions on the frame card custom element like the deletePersonFunction on this custom element
         this.subscriptions.push(this.eventAggregator.subscribe(`${EventEnum.ROLL_CHANGED}_${this.id}`, this.rollChangeEventListener.bind(this)));
         this.subscriptions.push(this.eventAggregator.subscribe(`${EventEnum.ROLL_VALIDATION_ERROR}_${this.id}`, this.validationMessageListener.bind(this)));
     }
@@ -59,7 +59,7 @@ export class PersonScoreCard {
         if (!frame.roll1) frame.roll1 = this.getRandomInt(0, 10);
         else if (!frame.roll2) {
             frame.roll2 = this.getRandomInt(0, 10 - frame.roll1);
-            if(frame.isLastFrame && !frame.isSpare) frame.roll3 = 0;
+            if (frame.isLastFrame && !frame.isSpare) frame.roll3 = 0;
         }
         else if (frame.isLastFrame && !frame.roll3) frame.roll3 = this.getRandomInt(0, 10);
     }
@@ -78,8 +78,8 @@ export class PersonScoreCard {
         for (let i = +rc.indexOfFrame - indexOffset; i < this.frameCards.length; i++) {
             const frame = this.frameCards[i];
 
-            // Prevent scores and scoreTotal from updating
-            if(!frame.roll1 || !frame.roll2) break;
+            // Prevent scores and scoreTotal from updating if the first two rolls haven't been entered yet
+            if (!frame.roll1 || !frame.roll2) break;
 
             this.updateFrame(frame);
 
@@ -94,7 +94,7 @@ export class PersonScoreCard {
 
     // private helpers
     private updateFrame(frame: FrameCardCustomElement) {
-        // @todo clean up / add helper methods
+        // @todo potentially break nested if statements into other private helper functions so it's easier to read and debug
         const previousFrameScore = frame.index > 0 ? this.frameCards[+frame.index - 1].score : 0;
 
         let sparePoints = 0;
@@ -116,7 +116,7 @@ export class PersonScoreCard {
 
     private getNearestIncompleteFrameIndex(): number {
         // use for loop instead of foreach because we need to break at the first one found
-        for(let i = 0; i < this.frameCards.length; i++) {
+        for (let i = 0; i < this.frameCards.length; i++) {
             let frameCard = this.frameCards[i];
             if (!frameCard.roll1 || !frameCard.roll2) {
                 return +frameCard.index;

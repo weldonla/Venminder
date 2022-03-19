@@ -1,14 +1,14 @@
 import { bootstrap } from 'aurelia-bootstrapper';
 import { ComponentTester, StageComponent } from 'aurelia-testing';
 import { FrameRolls } from '../entities/frame-rolls';
-import { PersonScoreCard } from 'resources/controls/person-score-card/person-score-card';
+import { PersonScoreCardCustomElement } from 'resources/controls/person-score-card/person-score-card';
 import { ScoreLoader } from "../helpers/score-loader"
 import * as assert from 'assert';
 
-describe('PersonScoreCard', () => {
+describe('PersonScoreCardCustomElement', () => {
   let el: HTMLElement;
   let tester: ComponentTester;
-  let sut: PersonScoreCard;
+  let sut: PersonScoreCardCustomElement;
 
   beforeEach(async () => {
     tester = StageComponent
