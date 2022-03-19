@@ -30,6 +30,7 @@ export class PersonScoreCard {
     }
 
     private attached() {
+        // @todo consider replacing subscriptions with bindable function like the deletePersonFunction
         this.subscriptions.push(this.eventAggregator.subscribe(`${EventEnum.ROLL_CHANGED}_${this.id}`, this.rollChangeEventListener.bind(this)));
         this.subscriptions.push(this.eventAggregator.subscribe(`${EventEnum.ROLL_VALIDATION_ERROR}_${this.id}`, this.validationMessageListener.bind(this)));
     }

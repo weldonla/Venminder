@@ -51,6 +51,50 @@ describe('PersonScoreCard', () => {
     assert.strictEqual(sut.scoreTotal, 300);
   });
 
+  it('test zeros and 10s spares with final roll3 10', async () => {
+    sut.frameCards.forEach((frameCard) => {
+      frameCard.roll1 = 0;
+      frameCard.roll2 = 10;
+      if (frameCard.isLastFrame) {
+        frameCard.roll3 = 10;
+      }
+    });
+
+    await tester.waitForElement("#scoreTotal")
+
+    assert.strictEqual(sut.scoreTotal, 110);
+  });
+
+  it('test zeros and 10s spares with final roll3 0', async () => {
+    sut.frameCards.forEach((frameCard) => {
+      frameCard.roll1 = 0;
+      frameCard.roll2 = 10;
+      if (frameCard.isLastFrame) {
+        frameCard.roll3 = 0;
+      }
+    });
+
+    await tester.waitForElement("#scoreTotal")
+
+    assert.strictEqual(sut.scoreTotal, 100);
+  });
+
+  it('test zeros final frame 10, 0, 10', async () => {
+    sut.frameCards.forEach((frameCard) => {
+      frameCard.roll1 = 0;
+      frameCard.roll2 = 0;
+      if (frameCard.isLastFrame) {
+        frameCard.roll1 = 10;
+        frameCard.roll2 = 0;
+        frameCard.roll3 = 10;
+      }
+    });
+
+    await tester.waitForElement("#scoreTotal")
+
+    assert.strictEqual(sut.scoreTotal, 20);
+  });
+
   it('test all 5s spares', async () => {
     sut.frameCards.forEach((frameCard) => {
       frameCard.roll1 = 5;

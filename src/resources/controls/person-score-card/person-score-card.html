@@ -18,8 +18,7 @@
                         <div class="container-fluid">
                             <div class="row mt-2">
                                 <div class="col p-0 text-right">
-                                    <!-- @todo add functionality to disable roll button disabled.bind="scoreTotal" -->
-                                    <button type="button" class="btn btn-light btn-sm d-inline-block" click.delegate="rollRandom()">Roll</button>
+                                    <button type="button" class="btn btn-light btn-sm d-inline-block" click.delegate="rollRandom()" disabled.bind="scoreTotal >= 0">Roll</button>
                                     <button type="button" class="btn btn-warning btn-sm d-inline-block" click.delegate="clearScoreCard()">Clear</button>
                                     <button type="button" class="btn btn-danger btn-sm d-inline-block" click.delegate="deletePersonFunction(id)">Delete</button>
                                 </div>
