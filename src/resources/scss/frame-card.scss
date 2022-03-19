@@ -1,0 +1,22 @@
+.frame-card {
+    min-height: 161px;
+}
+
+.strikeOrSpareAnnotation {
+    position: absolute; 
+    bottom: -0.1em; 
+    margin: 0;
+}
+
+.strikeOrSpareAnnotation.left {
+    left: 0.3em;
+}
+
+.strikeOrSpareAnnotation.middle {
+    left: 50%; 
+    transform: translate(-50%, 0);
+}
+
+.strikeOrSpareAnnotation.right {
+    right: 0.3em;
+}

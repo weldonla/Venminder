@@ -31,6 +31,20 @@ describe('PersonScoreCardCustomElement', () => {
 
     await tester.waitForElement("#scoreTotal")
 
+    assert.strictEqual(sut.frameCards[0].showStrike1, false);
+    assert.strictEqual(sut.frameCards[0].showStrike2, false);
+    assert.strictEqual(sut.frameCards[0].showStrike3, false);
+
+    assert.strictEqual(sut.frameCards[0].showSpare1, false);
+    assert.strictEqual(sut.frameCards[0].showSpare2, false);
+
+    assert.strictEqual(sut.frameCards[9].showStrike1, false);
+    assert.strictEqual(sut.frameCards[9].showStrike2, false);
+    assert.strictEqual(sut.frameCards[9].showStrike3, false);
+
+    assert.strictEqual(sut.frameCards[9].showSpare1, false);
+    assert.strictEqual(sut.frameCards[9].showSpare2, false);
+
     assert.strictEqual(sut.scoreTotal, 0);
   });
 
@@ -45,6 +59,13 @@ describe('PersonScoreCardCustomElement', () => {
 
     await tester.waitForElement("#scoreTotal")
 
+    assert.strictEqual(sut.frameCards[8].showStrike1, false);
+    assert.strictEqual(sut.frameCards[8].showStrike2, false);
+    assert.strictEqual(sut.frameCards[8].showStrike3, true);
+
+    assert.strictEqual(sut.frameCards[9].showStrike1, true);
+    assert.strictEqual(sut.frameCards[9].showStrike2, true);
+    assert.strictEqual(sut.frameCards[9].showStrike3, true);
     assert.strictEqual(sut.scoreTotal, 300);
   });
 
@@ -59,6 +80,11 @@ describe('PersonScoreCardCustomElement', () => {
 
     await tester.waitForElement("#scoreTotal")
 
+    assert.strictEqual(sut.frameCards[8].showSpare2, true);
+
+    assert.strictEqual(sut.frameCards[9].showSpare1, true);
+    assert.strictEqual(sut.frameCards[9].showSpare2, false);
+    assert.strictEqual(sut.frameCards[9].showStrike3, true);
     assert.strictEqual(sut.scoreTotal, 110);
   });
 

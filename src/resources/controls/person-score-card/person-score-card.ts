@@ -78,8 +78,13 @@ export class PersonScoreCardCustomElement {
         for (let i = +rc.indexOfFrame - indexOffset; i < this.frameCards.length; i++) {
             const frame = this.frameCards[i];
 
-            // Prevent scores and scoreTotal from updating if the first two rolls haven't been entered yet
-            if (!frame.roll1 || !frame.roll2) break;
+            // Prevent scores and scoreTotal from updating if the frame isn't finished yet
+            if ((!frame.roll1 || !frame.roll2)
+                || (
+                    frame.isLastFrame
+                    && (!frame.roll1 || !frame.roll2 || !frame.roll3)
+                )
+            ) break;
 
             this.updateFrame(frame);
 

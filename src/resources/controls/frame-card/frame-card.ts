@@ -34,6 +34,27 @@ export class FrameCardCustomElement {
         // A strike is also a spare intentionally, so the computeScore function is cleaner
         return (+this.roll1 + +this.roll2 === 10) ? true : false;
     }
+    @computedFrom("roll1", "isLastFrame")
+    public get showStrike1(): boolean {
+        return this.isLastFrame && +this.roll1 === 10 ? true : false;
+    }
+    @computedFrom("roll1", "roll2", "isLastFrame")
+    public get showStrike2(): boolean {
+        return this.isLastFrame && +this.roll1 === 10 && +this.roll2 === 10 ? true : false;
+    }
+    @computedFrom("roll1", "roll2", "roll3", "isLastFrame", "isStrike")
+    public get showStrike3(): boolean {
+        return ((this.isLastFrame && +this.roll3 === 10)
+            || (!this.isLastFrame && this.isStrike)) ? true : false;
+    }
+    @computedFrom("isLastFrame", "isSpare", "isStrike")
+    public get showSpare1(): boolean {
+        return this.isLastFrame && this.isSpare && !this.isStrike ? true : false;
+    }
+    @computedFrom("isLastFrame", "isSpare", "isStrike")
+    public get showSpare2(): boolean {
+        return !this.isLastFrame && this.isSpare && !this.isStrike ? true : false;
+    }
 
     // lifecycle
     public constructor(eventAggregator: EventAggregator) {

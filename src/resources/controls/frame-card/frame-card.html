@@ -1,5 +1,5 @@
 <template>
-    <div class="card text-white bg-secondary mb-3" style="min-height: 161px;">
+    <div class="card frame-card text-white bg-secondary mb-3">
         <div class="card-header">${name}</div>
         <div class="card-body">
             <div class="containter">
@@ -23,7 +23,12 @@
                 </div>
             </div>
         </div>
-        <h2 class="m-0 text-bottom" style="position: absolute; bottom: -0.1em; right: 0.3em;" if.bind="isStrike">X</h2>
-        <h2 class="m-0 text-bottom" style="position: absolute; bottom: -0.1em; right: 0.3em;" if.bind="isSpare && !isStrike">/</h2>
+        <h2 class="strikeOrSpareAnnotation left" if.bind="showStrike1">X</h2>
+        
+        <h2 class="strikeOrSpareAnnotation middle" if.bind="showStrike2">X</h2>
+        <h2 class="strikeOrSpareAnnotation middle" if.bind="showSpare1">/</h2>
+        
+        <h2 class="strikeOrSpareAnnotation right" if.bind="showStrike3">X</h2>
+        <h2 class="strikeOrSpareAnnotation right" if.bind="showSpare2">/</h2>
     </div>
 </template>
