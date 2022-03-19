@@ -8,7 +8,6 @@ $dark-dark: #000000;
 $dark-almost: #1b1c1c;
 
 // Dimensions
-
 $fixed-navbar-height: 56px;
 $fixed-footer-height: 107px;
 
@@ -26,29 +25,12 @@ body {
 }
 
 // Text
-.playfair-display {
-    font-family: "Playfair Display", Sans-serif;
-    line-height: $line-height-lg;
-}
-
-.permanent-marker {
-    font-family: "Permanent Marker", cursive;
-}
-
-.quote-background {
-    background-color: #333333bd;
-}
-
 a {
     color: $green-dark;
 
     &:hover {
         color: $green-light;
     }
-}
-
-code {
-    color: $blue-light;
 }
 
 // Navbar
@@ -58,10 +40,6 @@ code {
 
 .main-content-height {
     height: calc(100vh - $fixed-navbar-height);
-}
-
-.footer-height {
-    height: $fixed-footer-height;
 }
 
 // Simplebar

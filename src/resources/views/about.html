@@ -1,10 +1,49 @@
 <template>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col">
-                <div class="card text-white bg-dark">
-                    <div class="card-body">
-                        <h1>Venminder Bowling Scorer</h1>
+    <div class="main-content-height" data-simplebar data-simplebar-auto-hide="false">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col">
+                    <div class="card text-white bg-dark">
+                        <div class="card-body">
+                            <h1>Venminder Bowling Scorer</h1>
+                            <p>The following project is a bowling scorer I&apos;ve made as a coding challenge for Venminder. Under the hood, it&apos;s using
+                                the <a href="https://aurelia.io/" target="_blank">Aurelia Framework</a>, TypeScript, Bootstrap, and SCSS.
+                            </p>
+                            <h3>Design Considerations</h3>
+                            <p>For the individual frames, I used reusable components so I didn&apos;t have a lot of repeated code. This meant I was easily able to construct
+                                a person&apos;s score card with Aurelia&apos;s repeat.for loop. The downside to using the repeat.for loop though is that I wasn&apos;t able
+                                to directly observe changes to any given frame in the person score card custom element. To get around this, I&apos;m using the EventAggregator
+                                to subscribe and publish events. This way, whenever an observable on one of the frames changes, it can alert the person&apos;s score card and
+                                update all of the frames accordingly. While I personally like to avoid using event subscriptions, this solution was a lot cleaner than the
+                                alternative of having the 10 frames all as individual elements whose individual properties can be observed by the person score card rather
+                                than an array of elements which can&apos;t be observed by the person score card. I thought of potentially refactoring it to bind update functions,
+                                though I&apos;m pretty sure I would have ran into issues with the validation on the frame card component trying to pass the validation message back
+                                to the person score card component.
+                            </p>
+                            <h3>Testing</h3>
+                            <p>So I&apos;ve never actually done Jest testing before, and wanted to give it a try. It actually turned out rather well. I did hit a little snag at first
+                                though, because in testing the person score card, the frame cards weren&apos;t fully attached by the time the person score card was fully attached.
+                                However, I
+                                believe this was because I was using the manual life cycle functions at the time. After fixing that and learning how to set it up for testing custom
+                                components, it was quite easy to set up some testing for various sets of rolls.
+                            </p>
+                            <h3>Improvements</h3>
+                            <p>So this scorer is far from perfect. I would love to put in the extra time to actually make it perfect, and if I had more free time I would, however I need
+                                to wrap up soon and call it good.
+                            </p>
+                            <p>
+                                I&apos;m pretty sure there is a way around having to use the EventAggregator, and that would clean up the code a bit.
+                                I think I might be missing edge cases in the tests, or testing things unnecessarily. I only have a little experience writing unit tests, so I&apos;m sure
+                                my
+                                tests could be more succinct. I would have liked to go through and make it more mobile friendly, however I believe that&apos;s a little out of scope.
+                                Also,
+                                it would be nice to fix the bindables not being typed properly. In a lot of cases where I&apos;m referring to a variable that&apos;s
+                                supposed to be a number, I&apos;m putting a &apos;+&apos; in front of the variable so it&apos;s computed as a number and not a string when adding or
+                                subtracting. I know there are ways around it, but they seemed a little heavy handed to implement for such a small app. I also would have liked to add
+                                some form of global state through something like local storage for persistance in the scorer when switching between views, but that was also a bit
+                                out of scope. I also think it would have been a lot of fun to add .gif popups when someone gets a strike or a spare like in the bowling alley.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

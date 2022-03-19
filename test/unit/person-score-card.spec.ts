@@ -16,9 +16,6 @@ describe('PersonScoreCardCustomElement', () => {
       .inView(`<person-score-card></person-score-card>`);
 
     await tester.create(bootstrap)
-      .then(() => {
-        return tester.waitForElements("frame-card");
-      });
     el = <HTMLElement>tester.element;
     sut = tester.viewModel;
   });
