@@ -22,11 +22,11 @@ export class Scorer {
 
         if(this.personScoreCards.length === 0) return 0;
 
-        for(let id of this.personScoreCards) {
+        this.personScoreCards.forEach((id) => {
             if(id >= highestExistingId) {
                 highestExistingId = id;
             }
-        }
+        });
 
         return highestExistingId + 1;
     }
