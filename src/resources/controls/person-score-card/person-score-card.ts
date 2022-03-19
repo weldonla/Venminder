@@ -37,7 +37,7 @@ export class PersonScoreCardCustomElement {
 
     private detached() {
         this.subscriptions.forEach((subscription) => {
-            subscription.dispose()
+            subscription.dispose();
         });
     }
 
@@ -79,11 +79,9 @@ export class PersonScoreCardCustomElement {
             const frame = this.frameCards[i];
 
             // Prevent scores and scoreTotal from updating if the frame isn't finished yet
-            if ((!frame.roll1 || !frame.roll2)
-                || (
-                    frame.isLastFrame
-                    && (!frame.roll1 || !frame.roll2 || !frame.roll3)
-                )
+            if (
+                (!frame.roll1 || !frame.roll2)
+                || (frame.isLastFrame && (!frame.roll1 || !frame.roll2 || !frame.roll3))
             ) break;
 
             this.updateFrame(frame);
