@@ -54,11 +54,6 @@ export class FrameCardCustomElement {
 
     // public helpers
     public computeScore(previousFrameScore: number, sparePoints: number, strikePoints: number) {
-        // console.log("Compute score for: " + this.index);
-        // console.log("previousFrameScore: " + previousFrameScore);
-        // console.log("sparePoints: " + +sparePoints);
-        // console.log("strikePoints: " + +strikePoints);
-        // console.log(this.score);
         this.score = +previousFrameScore;
         if (this.isSpare) this.score += +sparePoints;
         if (this.isStrike) this.score += +strikePoints;
