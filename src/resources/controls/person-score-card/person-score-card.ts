@@ -99,7 +99,7 @@ export class PersonScoreCardCustomElement {
 
     // private helpers
     private updateFrame(frame: FrameCardCustomElement) {
-        // @todo potentially break nested if statements into other private helper functions so it's easier to read and debug
+        // @todo potentially break this function into other private helper functions for getting previousFrameScore, sparePoints, and strikePoints so it's easier to read and debug
         const previousFrameScore = frame.index > 0 ? this.frameCards[+frame.index - 1].score : 0;
 
         let sparePoints = 0;
@@ -128,7 +128,7 @@ export class PersonScoreCardCustomElement {
             }
         }
 
-        return 9;
+        return 9; // returns the index of the last frame if the rest are complete
     }
 
     // copy and pasted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
