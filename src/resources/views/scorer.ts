@@ -20,10 +20,10 @@ export class Scorer {
     private getNewPersonScoreCardId(): number {
         let highestExistingId: number = 0;
 
-        if(this.personScoreCards.length === 0) return 0;
+        if (this.personScoreCards.length === 0) return 0;
 
         this.personScoreCards.forEach((id) => {
-            if(id >= highestExistingId) {
+            if (id >= highestExistingId) {
                 highestExistingId = id;
             }
         });

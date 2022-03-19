@@ -6,7 +6,6 @@ import { ScoreLoader } from "../helpers/score-loader"
 import * as assert from 'assert';
 
 describe('PersonScoreCardCustomElement', () => {
-  let el: HTMLElement;
   let tester: ComponentTester;
   let sut: PersonScoreCardCustomElement;
 
@@ -16,7 +15,6 @@ describe('PersonScoreCardCustomElement', () => {
       .inView(`<person-score-card></person-score-card>`);
 
     await tester.create(bootstrap)
-    el = <HTMLElement>tester.element;
     sut = tester.viewModel;
   });
 
@@ -126,7 +124,7 @@ describe('PersonScoreCardCustomElement', () => {
         frameCard.roll3 = 5;
       }
     });
-    
+
     await tester.waitForElement("#scoreTotal")
 
     assert.strictEqual(sut.scoreTotal, 150);
@@ -146,7 +144,7 @@ describe('PersonScoreCardCustomElement', () => {
       new FrameRolls({ roll1: 10, roll2: 1, roll3: 7 }),
     ];
     ScoreLoader(sut.frameCards, allRolls);
-    
+
     await tester.waitForElement("#scoreTotal")
 
     assert.strictEqual(sut.scoreTotal, 110);
@@ -166,7 +164,7 @@ describe('PersonScoreCardCustomElement', () => {
       new FrameRolls({ roll1: 5, roll2: 5, roll3: 9 }),
     ];
     ScoreLoader(sut.frameCards, allRolls);
-    
+
     await tester.waitForElement("#scoreTotal")
 
     assert.strictEqual(sut.scoreTotal, 164);
@@ -186,11 +184,12 @@ describe('PersonScoreCardCustomElement', () => {
       new FrameRolls({ roll1: 9, roll2: 1, roll3: 1 }),
     ];
     ScoreLoader(sut.frameCards, allRolls);
-    
+
     await tester.waitForElement("#scoreTotal")
 
     assert.strictEqual(sut.scoreTotal, 140);
   });
 
+  // @todo would I need this? Is this useful?
   // afterEach(() => tester.dispose());
 });

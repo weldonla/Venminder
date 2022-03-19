@@ -29,8 +29,8 @@
             </div>
             <template repeat.for="i of 10">
                 <div class="col p-0 mt-2 d-flex">
-                    <frame-card name="Frame&nbsp;${i + 1}" index="${$index}" view-model.ref="frameCards[$index]" is-last-frame.bind="$index == 9 ? true : false"
-                        score-card-id.bind="id"></frame-card>
+                    <frame-card name="Frame&nbsp;${i + 1}" index="${$index}" view-model.ref="frameCards[$index]" is-last-frame.bind="$index == 9 ? true : false" score-card-id.bind="id">
+                    </frame-card>
                 </div>
             </template>
             <div class="col-auto p-0 mt-2 d-flex">
