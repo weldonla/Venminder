@@ -30,7 +30,6 @@ export class PersonScoreCardCustomElement {
     }
 
     private attached() {
-        // @todo consider replacing subscriptions with bindable functions on the frame card custom element like the deletePersonFunction on this custom element
         this.subscriptions.push(this.eventAggregator.subscribe(`${EventEnum.ROLL_CHANGED}_${this.id}`, this.rollChangeEventListener.bind(this)));
         this.subscriptions.push(this.eventAggregator.subscribe(`${EventEnum.ROLL_VALIDATION_ERROR}_${this.id}`, this.validationMessageListener.bind(this)));
     }
